@@ -1,0 +1,17 @@
+<!doctype html>
+Logged in as {{ name }}
+<form method="get" action="/logout">
+<p><input type=submit value=Logout>
+</form>
+
+<form method="post" action="/chat">
+    <p><input type=text name=content>
+    <p><input type=submit value=submit>
+</form>
+
+
+{% if dialogs %}
+    {% for dialog in dialogs %}
+    <p> {{ dialog.role }} / {{ dialog.content }} </p>
+    {% endfor %}
+{% endif %}

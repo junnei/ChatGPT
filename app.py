@@ -17,7 +17,9 @@ dialogs = {}
 @app.route('/')
 def index():
     if 'username' in session:
-        return render_template('index.html', name=session["username"], dialogs=dialogs[session["username"]])
+        if session['username'] in dialogs:
+            return render_template('index.html', name=session["username"], dialogs=dialogs[session["username"]])
+        return render_template('index.html', name=session["username"])
     return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])

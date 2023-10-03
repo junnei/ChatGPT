@@ -1,17 +1,63 @@
-<!doctype html>
-Logged in as {{ name }}
-<form method="get" action="/logout">
-<p><input type=submit value=Logout>
-</form>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
 
-<form method="post" action="/chat">
-    <p><input type=text name=content>
-    <p><input type=submit value=submit>
-</form>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 
+    <script>
+        window.onload = function() {
+            var scrollableDiv = document.getElementById("scrollableDiv");
+            scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+        }
+    </script>
+</head>
 
-{% if dialogs %}
-    {% for dialog in dialogs %}
-    <p> {{ dialog.role }} / {{ dialog.content }} </p>
-    {% endfor %}
-{% endif %}
+<body>
+
+  <div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center">
+                <div class="section text-center">
+                    <div class="flex-row-wrapper mx-auto">
+                        <h6 class="mr-3">{{ name }} 님, 환영합니다</h6>
+                        <form method="get" action="/logout">
+                        <p><input type=submit value="Logout" /></p>
+                        </form>
+                    </div>
+                    <div class="card-chat card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="bottom-wrap">
+                                    <div class="section text-center">
+                                        <div id="scrollableDiv" class="chat-content">
+                                        {% if dialogs %}
+                                            {% for dialog in dialogs %}
+                                                <div class="line">
+                                                {% if dialog.role=="user" %}
+                                                <span class="chat-box mine">{{ dialog.content }} </span>
+                                                {% else %}
+                                                <span class="chat-box">{{ dialog.content }} </span>
+                                                {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </div>
+                                        <div class="mt-2 mb-5">
+                                            <form method="post" action="/chat">
+                                                <p><input type=text name=content>
+                                                <p><input type=submit value="Submit">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
